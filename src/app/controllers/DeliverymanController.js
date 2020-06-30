@@ -52,9 +52,7 @@ class DeliverymanController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { id } = req.params;
-
-    const deliveryman = await Deliveryman.findByPk(id);
+    const deliveryman = await Deliveryman.findByPk(req.params.id);
 
     if (!deliveryman) {
       return res.status(400).json({ error: 'Deliveryman not found' });
@@ -70,13 +68,28 @@ class DeliverymanController {
       }
     }
 
-    const { name } = await deliveryman.update(req.body);
+    const { id, name, avatar_id } = await deliveryman.update(req.body);
 
     return res.json({
       id,
       name,
       email,
+      avatar_id,
     });
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const deliveryman = await Deliveryman.findByPk(id);
+
+    if (!deliveryman) {
+      return res.status(400).json({ error: 'Deliveryman not found' });
+    }
+
+    await deliveryman.destroy();
+
+    return res.send();
   }
 }
 
