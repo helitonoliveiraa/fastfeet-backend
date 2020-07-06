@@ -21,7 +21,9 @@
   <img src=".github/loading.gif" alt="Loading" width="150px">
 </p>
 
+## 📃 Sobre
 
+A aplicação que está sendo desenvolvida é um app para uma transportadora fictícia, o FastFeet.
 
 ## **📝 Licença**
 
