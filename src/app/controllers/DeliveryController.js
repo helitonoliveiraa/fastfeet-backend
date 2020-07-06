@@ -1,10 +1,14 @@
 import * as Yup from 'yup';
+// import { format } from 'date-fns';
+// import pt from 'date-fns/locale/pt';
 
 import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 
-import Mail from '../../lib/Mail';
+import NotificationMail from '../jobs/NotificationMail';
+
+import Queue from '../../lib/Queue';
 
 class DeliveryController {
   async index(req, res) {
@@ -48,10 +52,9 @@ class DeliveryController {
       product,
     });
 
-    await Mail.sendMail({
-      to: `${deliveryman.name} <${deliveryman.email}>`,
-      subject: 'Entrega',
-      text: 'Você tem uma nova entrega',
+    await Queue.add(NotificationMail.key, {
+      deliveryman,
+      recipient,
     });
 
     return res.json(delivery);
