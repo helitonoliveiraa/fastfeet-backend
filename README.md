@@ -17,7 +17,8 @@
 </p>
 
 <p align="center">
-  <strong>Em desenvolvimento...</strong>
+  <strong>Em desenvolvimento...</strong><br />
+  <img src=".github/loading.gif" alt="Loading" width="150px">
 </p>
 
 
