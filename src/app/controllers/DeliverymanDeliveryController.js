@@ -5,6 +5,7 @@ import Delivery from '../models/Delivery';
 class DeliverymanDeliveryController {
   async index(req, res) {
     const { id } = req.params;
+    const { page = 1 } = req.query;
 
     const deliveryman = await Deliveryman.findByPk(id);
 
@@ -18,6 +19,9 @@ class DeliverymanDeliveryController {
         signature_id: null,
         canceled_at: null,
       },
+      order: ['created_at'],
+      limit: 10,
+      offset: (page - 1) * 10,
       include: [
         {
           model: Deliveryman,
