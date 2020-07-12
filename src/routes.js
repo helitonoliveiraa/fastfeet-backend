@@ -9,10 +9,19 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import FileController from './app/controllers/FileController';
 import DeliveryController from './app/controllers/DeliveryController';
 
+import DeliverymanDeliveryController from './app/controllers/DeliverymanDeliveryController';
+import DeliverymanDeliveriedController from './app/controllers/DeliverymanDeliveriedController';
+
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const uploads = multer(multerConfig);
+
+routes.get('/deliveryman/:id/deliveries', DeliverymanDeliveryController.index);
+routes.get(
+  '/deliveryman/:id/deliveried',
+  DeliverymanDeliveriedController.index
+);
 
 routes.post('/sessions', SessionController.store);
 
