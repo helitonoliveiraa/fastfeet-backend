@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
+import File from '../models/File';
 
 import NotificationMail from '../jobs/NotificationMail';
 
@@ -61,7 +62,55 @@ class DeliveryController {
   }
 
   async update(req, res) {
-    return res.json({ ok: true });
+    const schema = Yup.object().shape({
+      recipient_id: Yup.number().required(),
+      deliveryman_id: Yup.number().required(),
+      product: Yup.string(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validations fails' });
+    }
+
+    const { id } = req.params;
+
+    const delivery = await Delivery.findByPk(id);
+
+    if (!delivery) {
+      return res.status(400).json({ error: 'Delivery not found!' });
+    }
+
+    const { recipient_id, deliveryman_id } = req.body;
+
+    if (!recipient_id) {
+      return res.status(400).json({
+        error: 'Recipient not found, do you want to register this recipient?',
+      });
+    }
+
+    if (!deliveryman_id) {
+      return res.status(400).json({ error: 'Deliveryman not found' });
+    }
+
+    await delivery.update(req.body);
+
+    const { name, avatar } = await Deliveryman.findByPk(deliveryman_id, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
+
+    return res.json({
+      id,
+      recipient_id,
+      deliveryman_id,
+      name,
+      avatar,
+    });
   }
 
   async delete(req, res) {

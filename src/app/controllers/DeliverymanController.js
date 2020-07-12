@@ -1,9 +1,18 @@
 import * as Yup from 'yup';
 import Deliveryman from '../models/Deliveryman';
+import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
-    const deliveryman = await Deliveryman.findAll();
+    const deliveryman = await Deliveryman.findAll({
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
 
     if (!deliveryman) {
       return res.status(400).json({ error: 'There are not deliverymen' });
@@ -68,13 +77,23 @@ class DeliverymanController {
       }
     }
 
-    const { id, name, avatar_id } = await deliveryman.update(req.body);
+    const { id, name } = await deliveryman.update(req.body);
+
+    const { avatar } = await Deliveryman.findByPk(id, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
 
     return res.json({
       id,
       name,
       email,
-      avatar_id,
+      avatar,
     });
   }
 
