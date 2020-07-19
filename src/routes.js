@@ -11,20 +11,28 @@ import DeliveryController from './app/controllers/DeliveryController';
 
 import DeliverymanDeliveryController from './app/controllers/DeliverymanDeliveryController';
 import DeliverymanDeliveriedController from './app/controllers/DeliverymanDeliveriedController';
+import DeliveryPickupController from './app/controllers/DeliveryPickupController';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const uploads = multer(multerConfig);
 
+/**
+ * Deliveryman routes without login
+ */
 routes.get('/deliveryman/:id/deliveries', DeliverymanDeliveryController.index);
 routes.get(
   '/deliveryman/:id/deliveried',
   DeliverymanDeliveriedController.index
 );
+routes.put('/deliveries/:id/pickup', DeliveryPickupController.update);
 
 routes.post('/sessions', SessionController.store);
 
+/**
+ * Middleware of authentication
+ */
 routes.use(authMiddleware);
 
 routes.post('/recipients', RecipientController.store);
