@@ -26,7 +26,7 @@ class DeliveryPickupController {
     if (currentTime < 8 || currentTime > 16) {
       return res
         .status(400)
-        .json({ error: 'You just can do withdrawn in business hours!' });
+        .json({ error: 'You just can do withdraw in business hours!' });
     }
 
     const deliverymanWithdrawals = await Delivery.count({
