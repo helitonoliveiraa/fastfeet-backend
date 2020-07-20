@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/rocketseat/bootcamp-gostack-desafio-03?color=%234B0082">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/heliton1988/bootcamp-gostack-fastfeet?color=%234B0082">
 
   <a href="https://www.linkedin.com/in/helitonoliveira/">
     <img alt="Made by Héliton Oliveira" src="https://img.shields.io/badge/made%20by-Héliton Oliveira-%234B0082">
