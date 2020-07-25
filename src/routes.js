@@ -15,6 +15,7 @@ import DeliveryPickupController from './app/controllers/DeliveryPickupController
 import DeliveryPickupCompleteController from './app/controllers/DeliveryPickupCompleteController';
 
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
+import DeliveryOneProblemController from './app/controllers/DeliveryOneProblemController';
 import DeliverymanProblemController from './app/controllers/DeliverymanProblemController';
 
 import authMiddleware from './app/middlewares/auth';
@@ -65,6 +66,6 @@ routes.put('/deliveries/:id', DeliveryController.update);
 routes.delete('/deliveries/:id', DeliveryController.delete);
 
 routes.get('/delivery/problems', DeliveryProblemController.index);
-routes.get('/delivery/:id/problems', DeliveryProblemController.index);
+routes.get('/delivery/:id/problems', DeliveryOneProblemController.index);
 
 export default routes;
