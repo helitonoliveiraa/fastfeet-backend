@@ -14,6 +14,9 @@ import DeliverymanDeliveriedController from './app/controllers/DeliverymanDelive
 import DeliveryPickupController from './app/controllers/DeliveryPickupController';
 import DeliveryPickupCompleteController from './app/controllers/DeliveryPickupCompleteController';
 
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
+import DeliverymanProblemController from './app/controllers/DeliverymanProblemController';
+
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
@@ -33,6 +36,7 @@ routes.put(
   uploads.single('file'),
   DeliveryPickupCompleteController.update
 );
+routes.post('/delivery/:id/problems', DeliverymanProblemController.store);
 
 /**
  * Login
@@ -44,6 +48,9 @@ routes.post('/sessions', SessionController.store);
  */
 routes.use(authMiddleware);
 
+/**
+ * Routes that need authentication
+ */
 routes.post('/recipients', RecipientController.store);
 routes.post('/files', uploads.single('file'), FileController.store);
 
@@ -56,5 +63,8 @@ routes.get('/deliveries', DeliveryController.index);
 routes.post('/deliveries', DeliveryController.store);
 routes.put('/deliveries/:id', DeliveryController.update);
 routes.delete('/deliveries/:id', DeliveryController.delete);
+
+routes.get('/delivery/problems', DeliveryProblemController.index);
+routes.get('/delivery/:id/problems', DeliveryProblemController.index);
 
 export default routes;
