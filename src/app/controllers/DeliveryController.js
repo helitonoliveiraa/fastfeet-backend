@@ -1,6 +1,4 @@
 import * as Yup from 'yup';
-// import { format } from 'date-fns';
-// import pt from 'date-fns/locale/pt';
 
 import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
