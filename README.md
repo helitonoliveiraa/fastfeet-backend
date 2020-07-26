@@ -18,12 +18,78 @@
 
 <p align="center">
   <strong>Em desenvolvimento...</strong><br />
-  <img src=".github/loading.gif" alt="Loading" width="150px">
+  <img src=".github/loading.gif" alt="Loading" width="50px">
 </p>
 
-## 📃 Sobre
+---
 
-A aplicação que está sendo desenvolvida é um app para uma transportadora fictícia, o FastFeet.
+## 📃 **Sobre**
+
+Este é o back-end da aplicação **FastFeet**, que é um app para um transportadora
+fictícia.
+
+---
+
+## ⚒️ **Ferramentas utilizadas**
+
+- [Express](https://expressjs.com/pt-br/)
+- [Sequelize](https://nodemailer.com/about/)
+- [Postgre](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [Nodemon](https://nodemon.io/)
+- [jsonwebtoken](http://jwt.io/)
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs)
+- [date-fns](https://www.npmjs.com/package/date-fns)
+- [multer](https://www.npmjs.com/package/multer)
+- [bee-queue](https://github.com/bee-queue/bee-queue)
+- [Nodemailer](https://nodemailer.com/about/)
+- [sucrase](https://www.npmjs.com/package/sucrase)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [YUP](https://dev.to/szib/yup-1ib0)
+
+---
+
+## ⚙️ **Como usar**
+
+Para clonar e rodar essa aplicação é necessário ter as seguintes
+ferramentas instaladas em seu computador; `Git`, Node.js v12.16.2 ou superior,
+yarn v1.22.4 ou superior e o Docker. Também é necessário configurar e rodar os bancos de dados Postgres e Redis
+
+#### Primeiro passo, instalar as databases
+
+```bash
+  ## Crie a database principal com Postgres
+  $ docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+
+  ## Crie a database com Redis
+  $ docker run --name redisfastfeet -p 6379:6379 -d -t redis:alpine
+```
+#### Segundo passo rodar o projeto
+
+```bash
+  ## Clone o repositório
+  $ git clone https://github.com/heliton1988/bootcamp-gostack-fastfeet-backend.git
+
+  ## Acesse o repositório
+  $ cd bootcamp-gostack-fastfeet-backend
+
+  ## Instale todas as dependências
+  $ yarn
+
+  ## Rode o seeds para popular o banco de dados
+  $ yarn sequelize db:seed
+
+  ## Rode as migrations
+  $ yarn sequelize db:migrate
+
+  ## Rode o server
+  $ yarn dev
+
+  ## Rode a fila
+  $ yarn queue
+```
+---
 
 ## **📝 Licença**
 
