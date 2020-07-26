@@ -53,8 +53,8 @@ fictícia.
 ## ⚙️ **Como usar**
 
 Para clonar e rodar essa aplicação é necessário ter as seguintes
-ferramentas instaladas em seu computador; `Git`, Node.js v12.16.2 ou superior,
-yarn v1.22.4 ou superior e o Docker. Também é necessário configurar e rodar os bancos de dados Postgres e Redis
+ferramentas instaladas em seu computador; `Git`, `Node.js v12.16.2` ou superior,
+`yarn v1.22.4` ou superior e o `Docker`. Também é necessário configurar e rodar os bancos de dados `Postgres` e `Redis`
 
 #### Primeiro passo, instalar as databases
 
