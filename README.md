@@ -65,7 +65,14 @@ ferramentas instaladas em seu computador; `Git`, `Node.js v12.16.2` ou superior,
   ## Crie a database com Redis
   $ docker run --name redisfastfeet -p 6379:6379 -d -t redis:alpine
 ```
-#### Segundo passo rodar o projeto
+#### segundo passo
+
+recomenda-se utilizar o software **Postbird**, para que seja possível uma melhor experiencia em manipular os dados.<br />
+Para realizar a conexão via **postbird** utilize o `Username: postgres`  | `Password: docker`.<br />
+Feito isso, no software **Postbird** crie uma database de nome `fastfeet`.
+
+
+#### terceiro passo rodar o projeto
 
 ```bash
   ## Clone o repositório
@@ -77,11 +84,11 @@ ferramentas instaladas em seu computador; `Git`, `Node.js v12.16.2` ou superior,
   ## Instale todas as dependências
   $ yarn
 
-  ## Rode o seeds para popular o banco de dados
-  $ yarn sequelize db:seed
-
   ## Rode as migrations
   $ yarn sequelize db:migrate
+
+  ## Rode o seeds para popular o banco de dados
+  $ yarn sequelize seed:generate --name admin-user
 
   ## Rode o server
   $ yarn dev
