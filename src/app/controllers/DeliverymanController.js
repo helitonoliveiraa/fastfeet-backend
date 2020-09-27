@@ -8,7 +8,7 @@ class DeliverymanController {
     const { name } = req.query;
 
     if (!name) {
-      const deliveryman = await Deliveryman.findAll({
+      const deliverymen = await Deliveryman.findAll({
         include: [
           {
             model: File,
@@ -18,26 +18,34 @@ class DeliverymanController {
         ],
       });
 
-      return res.status(200).json(deliveryman);
+      if (!deliverymen) {
+        return res.status(400).json({ error: 'Deliverymen not found!' });
+      }
+
+      return res.status(200).json(deliverymen);
     }
 
     const deliveryman = await Deliveryman.findAll({
       where: {
         name: {
-          [Op.iLike]: name,
+          [Op.iLike]: `%${name}%`,
         },
       },
       include: [
         {
           model: File,
           as: 'avatar',
-          attributes: ['name', 'path', 'url'],
+          attributes: ['id', 'name', 'path', 'url'],
         },
       ],
     });
 
+    if (deliveryman.length === 0) {
+      return res.json({ message: 'Does not exists this deliveryman!' });
+    }
+
     if (!deliveryman) {
-      return res.status(400).json({ error: 'There are not deliverymen' });
+      return res.status(400).json({ error: 'There are not deliverymen!' });
     }
 
     return res.json(deliveryman);
