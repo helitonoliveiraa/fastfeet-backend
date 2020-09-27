@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
@@ -11,7 +12,77 @@ import Queue from '../../lib/Queue';
 
 class DeliveryController {
   async index(req, res) {
-    const deliveries = await Delivery.findAll();
+    const { product } = req.query;
+
+    if (!product) {
+      const deliveries = await Delivery.findAll({
+        include: [
+          {
+            model: Deliveryman,
+            as: 'deliveryman',
+            attributes: ['id', 'name', 'email'],
+            include: [
+              {
+                model: File,
+                as: 'avatar',
+                attributes: ['id', 'path', 'url'],
+              },
+            ],
+          },
+          {
+            model: Recipient,
+            as: 'destination',
+            attributes: [
+              'id',
+              'name',
+              'street',
+              'number',
+              'complement',
+              'state',
+              'city',
+              'zip_code',
+            ],
+          },
+        ],
+      });
+
+      return res.status(200).json(deliveries);
+    }
+
+    const deliveries = await Delivery.findAll({
+      where: {
+        product: {
+          [Op.iLike]: product,
+        },
+      },
+      include: [
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['id', 'name', 'email'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
+        },
+        {
+          model: Recipient,
+          as: 'destination',
+          attributes: [
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'zip_code',
+          ],
+        },
+      ],
+    });
 
     if (!deliveries) {
       return res.status(400).json({ error: 'There are not delivaries' });
