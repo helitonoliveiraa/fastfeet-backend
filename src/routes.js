@@ -53,6 +53,7 @@ routes.use(authMiddleware);
 /**
  * Routes that need authentication
  */
+routes.get('/recipients', RecipientController.index);
 routes.post('/recipients', RecipientController.store);
 routes.post('/files', uploads.single('file'), FileController.store);
 
