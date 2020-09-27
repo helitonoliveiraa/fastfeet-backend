@@ -46,13 +46,17 @@ class DeliveryController {
         ],
       });
 
+      if (!deliveries) {
+        return res.status(400).json({ error: 'Deliveries not found!' });
+      }
+
       return res.status(200).json(deliveries);
     }
 
-    const deliveries = await Delivery.findAll({
+    const delivery = await Delivery.findAll({
       where: {
         product: {
-          [Op.iLike]: product,
+          [Op.iLike]: `%${product}%`,
         },
       },
       include: [
@@ -84,11 +88,15 @@ class DeliveryController {
       ],
     });
 
-    if (!deliveries) {
-      return res.status(400).json({ error: 'There are not delivaries' });
+    if (delivery.length === 0) {
+      return res.json({ message: 'Does not exists this delivery' });
     }
 
-    return res.json(deliveries);
+    if (!delivery) {
+      return res.status(400).json({ error: 'Delivery not found!' });
+    }
+
+    return res.json(delivery);
   }
 
   async store(req, res) {
