@@ -5,10 +5,13 @@ import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
-    const { name } = req.query;
+    const { name, page = 1 } = req.query;
 
     if (!name) {
       const deliverymen = await Deliveryman.findAll({
+        order: ['id'],
+        limig: 20,
+        offset: (page - 1) * 20,
         include: [
           {
             model: File,
@@ -31,6 +34,9 @@ class DeliverymanController {
           [Op.iLike]: `%${name}%`,
         },
       },
+      order: ['id'],
+      limit: 20,
+      offset: (page - 1) * 20,
       include: [
         {
           model: File,
@@ -40,7 +46,7 @@ class DeliverymanController {
       ],
     });
 
-    if (deliveryman.length === 0) {
+    if (deliveryman.length === 0 && page === 1) {
       return res.json({ message: 'Does not exists this deliveryman!' });
     }
 

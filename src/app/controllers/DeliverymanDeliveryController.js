@@ -21,7 +21,7 @@ class DeliverymanDeliveryController {
       },
       order: ['created_at'],
       limit: 10,
-      offset: (page - 1) * 10,
+      offset: (page - 1) * 12,
       include: [
         {
           model: Deliveryman,

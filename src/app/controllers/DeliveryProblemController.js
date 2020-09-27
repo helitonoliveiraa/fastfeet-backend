@@ -6,8 +6,13 @@ import Deliveryman from '../models/Deliveryman';
 
 class DeliveryProblemController {
   async index(req, res) {
+    const { page = 1 } = req.query;
+
     const deliveryProblem = await DeliveryProblem.findAll({
+      order: ['id'],
       attributes: ['description'],
+      limit: 20,
+      offset: (page - 1) * 20,
       include: [
         {
           model: Delivery,

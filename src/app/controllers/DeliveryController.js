@@ -12,10 +12,13 @@ import Queue from '../../lib/Queue';
 
 class DeliveryController {
   async index(req, res) {
-    const { product } = req.query;
+    const { product, page = 1 } = req.query;
 
     if (!product) {
       const deliveries = await Delivery.findAll({
+        order: ['id'],
+        limit: 20,
+        offset: (page - 1) * 20,
         include: [
           {
             model: Deliveryman,
@@ -59,6 +62,9 @@ class DeliveryController {
           [Op.iLike]: `%${product}%`,
         },
       },
+      order: ['id'],
+      limit: 20,
+      offset: (page - 1) * 20,
       include: [
         {
           model: Deliveryman,
@@ -88,7 +94,7 @@ class DeliveryController {
       ],
     });
 
-    if (delivery.length === 0) {
+    if (delivery.length === 0 && page < 2) {
       return res.json({ message: 'Does not exists this delivery' });
     }
 

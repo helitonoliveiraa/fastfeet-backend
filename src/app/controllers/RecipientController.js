@@ -4,10 +4,14 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const { recipientName } = req.query;
+    const { recipientName, page = 1 } = req.query;
 
     if (!recipientName) {
-      const recipients = await Recipient.findAll();
+      const recipients = await Recipient.findAll({
+        order: ['id'],
+        limit: 20,
+        offset: (page - 1) * 20,
+      });
 
       if (!recipients) {
         return res.status(400).json({ error: 'There are not recipients' });
@@ -22,9 +26,12 @@ class RecipientController {
           [Op.iLike]: `%${recipientName}%`,
         },
       },
+      order: ['id'],
+      limit: 20,
+      offset: (page - 1) * 20,
     });
 
-    if (recipient.length === 0) {
+    if (recipient.length === 0 && page < 2) {
       return res.json({ message: 'Does not exists this recipient!' });
     }
 
