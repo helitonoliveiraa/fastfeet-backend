@@ -121,11 +121,11 @@ Rode as migrations;
 Rode o seeds para popular o banco de dados;
 
 ```bash
-  $ yarn sequelize seed:generate --name admin-user
+  $ yarn sequelize db:seed:all
 
   # ou
 
-  $ npm run sequelize seed:generate --name admin-user
+  $ npm run sequelize db:seed:all
 ```
 
 Rode o server;
